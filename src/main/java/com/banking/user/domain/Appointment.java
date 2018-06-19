@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by gokhan.gunay on 2/5/2018.
  */
-public class Appointment { // randevu
+public class Appointment { // Randevu
 
     private Long id;
     private Date date;
