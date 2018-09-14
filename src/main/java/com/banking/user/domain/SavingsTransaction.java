@@ -1,32 +1,40 @@
 package com.banking.user.domain;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * Created by gokhan.gunay on 2/5/2018.
  */
+@Entity
 public class SavingsTransaction { // Birikim İşlemleri
 
+    @Id
+    @GeneratedValue
     private Long id;
+
     private Date date;
     private String description;
     private String type;
     private String status;
     private Double amount; // Miktar
     private BigDecimal availableBalance; // Kalan Bakiye
-    private PrimaryAccount primaryAccount; // Ana Hesap
+
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private SavingsAccount savingsAccount; // Yatırım Hesabı
 
     public SavingsTransaction(){}
 
-    public SavingsTransaction(Date date, String description, String type, String status, Double amount, BigDecimal availableBalance, PrimaryAccount primaryAccount) {
+    public SavingsTransaction(Date date, String description, String type, String status, Double amount, BigDecimal availableBalance, SavingsAccount savingsAccount) {
         this.date = date;
         this.description = description;
         this.type = type;
         this.status = status;
         this.amount = amount;
         this.availableBalance = availableBalance;
-        this.primaryAccount = primaryAccount;
+        this.savingsAccount = savingsAccount;
     }
 
     public Long getId() {
@@ -85,11 +93,11 @@ public class SavingsTransaction { // Birikim İşlemleri
         this.availableBalance = availableBalance;
     }
 
-    public PrimaryAccount getPrimaryAccount() {
-        return primaryAccount;
+    public SavingsAccount getSavingsAccount() {
+        return savingsAccount;
     }
 
-    public void setPrimaryAccount(PrimaryAccount primaryAccount) {
-        this.primaryAccount = primaryAccount;
+    public void setSavingsAccount(SavingsAccount savingsAccount) {
+        this.savingsAccount = savingsAccount;
     }
 }

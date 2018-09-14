@@ -1,18 +1,25 @@
 package com.banking.user.domain;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by gokhan.gunay on 2/5/2018.
  */
+
+@Entity
 public class Appointment { // Randevu
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Date date;
     private String location;
     private String description;
     private Boolean confirmed; // Onay
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
     private User user;
 
     public Long getId() {

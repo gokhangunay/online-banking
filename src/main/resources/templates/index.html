@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header"/>
+<body>
+<!-- Login Section -->
+<img class="img-responsive" src="../static/images/myBanner.png" alt="banner"/>
+
+<div class="container">
+    <div class="row ">
+        <div class="main-center ">
+            <div class="bg-danger" th:if="${param.error}">
+                Hata! Geçersiz kullanıcı veya eksik.
+            </div>
+            <div class="bg-danger" th:if="${param.logout}">
+                Çıkış Yaptınız.
+            </div>
+            <form class="form-signin" th:action="@{/index}" method="post">
+                <h2 class="form-signin-heading">Lütfen Giriş Yapın!</h2>
+                <div class="form-group">
+                    <label for="username" class="sr-only">Kullanıcı Adı</label>
+                    <input type="text" roleId="username" class="form-control" placeholder="Username" name="username"
+                           id="username"
+                           required="required" autofocus="autofocus"/>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="sr-only">Şifre</label>
+                    <input type="password" roleId="inputPassword" class="form-control" placeholder="Password"
+                           id="password"
+                           name="password" required="required"/>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" name="remember-me" id="remember-me"/> &nbsp; Beni Hatırla
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Oturum Aç</button>
+            </form>
+
+            <hr />
+
+            <div class="form-group ">
+                <a type="submit" class="btn btn-info btn-lg btn-block login-button" th:href="@{/signup}">Kayıt Ol!</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="common/header :: body-bottom-scripts"/>
+
+</body>
+</html>

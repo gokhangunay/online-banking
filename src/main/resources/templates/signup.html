@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header" />
+<body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<!--<head th:replace="common/header :: navbar" />-->
+<div class="container">
+    <div class="row main">
+        <div class="panel-heading">
+            <div class="panel-title text-center">
+                <h1 class="title">Aramıza Hoşgeldiniz!</h1>
+                <hr />
+            </div>
+        </div>
+        <div class="main-login main-center">
+            <form class="form-horizontal" method="post" th:action="@{/signup}">
+
+                <div class="form-group">
+                    <label for="firstName" class="cols-sm-2 control-label">Adı</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" th:value="${user.firstName}" id="firstName" name="firstName" roleId="firstname"  placeholder="Adınızı Giriniz" required="required"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName" class="cols-sm-2 control-label">Soyadı</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" th:value="${user.lastName}" id="lastName" name="lastName" roleId="lastName"  placeholder="Soyadınızı Giriniz" required="required"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber" class="cols-sm-2 control-label">Telefon</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" th:value="${user.phoneNumber}" id="phoneNumber" name="phoneNumber" roleId="phoneNumber"  placeholder="xxx-xxx-xxxx" required="required"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="cols-sm-2 control-label">Mail Adresi</label><span class="bg-danger pull-right" th:if="${emailExists}">Bu e-posta kayıtlı!</span>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" th:value="${user.email}" id="email" name="email" roleId="email"  placeholder="E-postanızı Giriniz" required="required"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="username" class="cols-sm-2 control-label">Kullanıcı Adı</label><span class="bg-danger pull-right" th:if="${usernameExists}">Bu kullanıcı adı kayıtlı!</span>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" th:value="${user.userName}" id="userName" name="userName" roleId="userName"  placeholder="Kullanıcı Adı Giriniz" required="required"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="cols-sm-2 control-label">Şifre</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                            <input type="password" class="form-control" th:value="${user.password}" id="password" name="password" roleId="password"  placeholder="Şifre Giriniz" required="required"/>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input id="showPassword" type="checkbox" />Şifreyi Göster
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="form-group">-->
+                <!--<label for="confirm" class="cols-sm-2 control-label">Confirm Secret</label>-->
+                <!--<div class="cols-sm-10">-->
+                <!--<div class="input-group">-->
+                <!--<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>-->
+                <!--<input type="secret" class="form-control" name="confirm" roleId="confirm"  placeholder="Confirm your Secret" required="required"/>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <div class="form-group ">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Kaydol!</button>
+                </div>
+
+                <hr />
+
+                <div class="form-group ">
+                    <a  class="btn btn-info btn-lg btn-block login-button" th:href="@{/}">İptal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="common/header :: body-bottom-scripts" />
+
+</body>
+</html>

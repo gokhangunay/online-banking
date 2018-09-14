@@ -1,10 +1,17 @@
 package com.banking.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
 /**
  * Created by gokhan.gunay on 2/5/2018.
  */
+@Entity
 public class Recipient { // Alıcı
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String email;
@@ -12,6 +19,9 @@ public class Recipient { // Alıcı
     private String accountNumber; // Hesap Numarası
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    @JsonIgnore
     private User user;
 
     public Long getId() {

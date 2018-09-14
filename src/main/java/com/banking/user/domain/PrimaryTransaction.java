@@ -1,13 +1,17 @@
 package com.banking.user.domain;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * Created by gokhan.gunay on 2/5/2018.
  */
+@Entity
 public class PrimaryTransaction { // Birincil İşlem
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Date date;
     private String description;
@@ -15,6 +19,9 @@ public class PrimaryTransaction { // Birincil İşlem
     private String status;
     private Double amount; // Miktar
     private BigDecimal availableBalance; // Kalan Bakiye
+
+    @ManyToOne
+    @JoinColumn(name = "id")
     private PrimaryAccount primaryAccount; // Ana Hesap
 
     public PrimaryTransaction(){}

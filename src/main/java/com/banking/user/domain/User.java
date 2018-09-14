@@ -1,5 +1,8 @@
 package com.banking.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -7,26 +10,40 @@ import java.util.List;
  */
 public class User {
 
-    private Long userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", nullable = false, updatable = false)
+    private Long id;
     private String userName;
     private String password;
     private String firstName;
     private String lastName;
+
+    @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
+
     private String phoneNumber;
     private Boolean enabled = true;
 
+    @OneToOne
     private PrimaryAccount primaryAccount; // Ana Hesap
+
+    @OneToOne
     private SavingsAccount savingsAccount; // Vadeli Hesap
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Appointment> appointmentList; // Randevu
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Recipient> recipientList; // Alıcı
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -117,6 +134,22 @@ public class User {
         this.recipientList = recipientList;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", enabled=" + enabled +
+                ", primaryAccount=" + primaryAccount +
+                ", savingsAccount=" + savingsAccount +
+                ", appointmentList=" + appointmentList +
+                ", recipientList=" + recipientList +
+                '}';
+    }
 
 }
