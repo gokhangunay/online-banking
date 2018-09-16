@@ -1,6 +1,7 @@
 package com.banking.user.linebyline.abend;
 
 import com.banking.user.linebyline.abend.TxtColumnNameAndData;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class TXN_ABEND {
 
@@ -21,13 +23,15 @@ public class TXN_ABEND {
     //static final String LINE_PREFIX = "CICSPA";
 
     static final ArrayList<String> buildNames;
+
     static {
-        buildNames = new ArrayList<>(Arrays.asList("CICSPA11","CICSPA13","CICSPA15","CICSPA17",
-                "CICSPA31","CICSPA33","CICSPA14","CICSPA16",
-                "CICSPA18","CICSPA32","CICSPA34"));
+        buildNames = new ArrayList<>(Arrays.asList("CICSPA11", "CICSPA13", "CICSPA15", "CICSPA17",
+                "CICSPA31", "CICSPA33", "CICSPA14", "CICSPA16",
+                "CICSPA18", "CICSPA32", "CICSPA34"));
     }
 
     static final ArrayList<String> linePrefixNames;
+
     static {
         linePrefixNames = new ArrayList<>(Arrays.asList("CICSPA", "CICSPI", "CICSPT", "YSPCICS", "WEBCICS"));
     }
@@ -60,7 +64,7 @@ public class TXN_ABEND {
         try {
             File[] fileList = filePath.listFiles();
 
-            for(File file : fileList){
+            for (File file : fileList) {
                 if (file.getName().indexOf(FILE_PATTERN) != -1) {
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -68,8 +72,8 @@ public class TXN_ABEND {
 
                     BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
                     String line = null;
-                    while ((line = bufferedReader.readLine()) != null){
-                        for(String linePrefix : linePrefixNames){
+                    while ((line = bufferedReader.readLine()) != null) {
+                        for (String linePrefix : linePrefixNames) {
                             int index = line.indexOf(linePrefix);
                             if (index != -1) {
                                 line = line.substring(1);
@@ -79,19 +83,19 @@ public class TXN_ABEND {
 
                                         TxtColumnNameAndData txtColumnNameAndData = new TxtColumnNameAndData();
 
-                                        txtColumnNameAndData.setApplid(lineArr[0] );
+                                        txtColumnNameAndData.setApplid(lineArr[0]);
                                         txtColumnNameAndData.setAbor(lineArr[1].equals("-") ? null : lineArr[1]);
                                         txtColumnNameAndData.setTransaction(lineArr[2].equals("-") ? null : lineArr[2]);
                                         txtColumnNameAndData.setProgram(lineArr[3].equals("-") ? null : lineArr[3]);
                                         txtColumnNameAndData.setTasks(lineArr[4]);
-                                        txtColumnNameAndData.setAvgResponseTime((lineArr[4].substring(0,1).equals(".")) ? lineArr[4].replace(".","0.") : lineArr[4]);
-                                        txtColumnNameAndData.setMaxResponseTime((lineArr[5].substring(0,1).equals(".")) ? lineArr[5].replace(".","0.") : lineArr[5]);
-                                        txtColumnNameAndData.setAvgDispatchTime((lineArr[6].substring(0,1).equals(".")) ? lineArr[6].replace(".","0.") : lineArr[6]);
+                                        txtColumnNameAndData.setAvgResponseTime((lineArr[4].substring(0, 1).equals(".")) ? lineArr[4].replace(".", "0.") : lineArr[4]);
+                                        txtColumnNameAndData.setMaxResponseTime((lineArr[5].substring(0, 1).equals(".")) ? lineArr[5].replace(".", "0.") : lineArr[5]);
+                                        txtColumnNameAndData.setAvgDispatchTime((lineArr[6].substring(0, 1).equals(".")) ? lineArr[6].replace(".", "0.") : lineArr[6]);
                                         txtColumnNameAndData.setAvgDispatchCount(lineArr[7]);
-                                        txtColumnNameAndData.setAvgUserCpuTime((lineArr[8].substring(0,1).equals(".")) ? lineArr[8].replace(".","0.") : lineArr[8]);
-                                        txtColumnNameAndData.setAvgSuspendTime((lineArr[9].substring(0,1).equals(".")) ? lineArr[8].replace(".","0.") : lineArr[9]);
-                                        txtColumnNameAndData.setMaxSuspendTime((lineArr[10].substring(0,1).equals(".")) ? lineArr[8].replace(".","0.") : lineArr[10]);
-                                        txtColumnNameAndData.setAvgDispwaitTime((lineArr[11].substring(0,1).equals(".")) ? lineArr[8].replace(".","0.") : lineArr[11]);
+                                        txtColumnNameAndData.setAvgUserCpuTime((lineArr[8].substring(0, 1).equals(".")) ? lineArr[8].replace(".", "0.") : lineArr[8]);
+                                        txtColumnNameAndData.setAvgSuspendTime((lineArr[9].substring(0, 1).equals(".")) ? lineArr[8].replace(".", "0.") : lineArr[9]);
+                                        txtColumnNameAndData.setMaxSuspendTime((lineArr[10].substring(0, 1).equals(".")) ? lineArr[8].replace(".", "0.") : lineArr[10]);
+                                        txtColumnNameAndData.setAvgDispwaitTime((lineArr[11].substring(0, 1).equals(".")) ? lineArr[8].replace(".", "0.") : lineArr[11]);
 
                                         txtColumnNameAndData.setDate(date);
 
@@ -107,46 +111,53 @@ public class TXN_ABEND {
             e.printStackTrace();
         }
 
-        return  txtColumnNameAndDataList;
+        return txtColumnNameAndDataList;
     }
 
     static String[] cleanArr(String[] arr) {
         String line = "";
+        String tempLine = "";
         int stringCount = 0;
+        int numberCount = 0;
+        ArrayUtils.reverse(arr);
         for (int i = 0; i < arr.length; i++) {
             String txt = arr[i].replaceAll(" ", "");
             if (txt.length() > 0) {
-                try {
-                    Double.parseDouble(txt);
-                    if (stringCount == 1) {
-                        line += "-;-;";
-                        stringCount = 3;
-                    } else if (stringCount == 2){
-                        line += "-;";
-                        stringCount = 3;
-                    }
+                if (numberCount < 9) {
                     line += txt + ";";
-                } catch (NumberFormatException e) {
-                    line += txt + ";";
+                    numberCount++;
+                } else {
+                    tempLine += txt + ";";
                     stringCount++;
-                    //e.printStackTrace();
                 }
             }
         }
 
-        System.out.println(line);
+        if (stringCount == 4) {
+            line += tempLine + ";";
+        } else if (stringCount == 3) {
+            line += ("-;" + tempLine);
+        } else if (stringCount == 2) {
+            line += ("-;-;" + tempLine);
+        } else if (stringCount == 1) {
+            line += ("-;-;-;" + tempLine);
+        }
 
-        return line.split(";");
+        System.out.println(line);
+        String[] result = line.split(";");
+        ArrayUtils.reverse(result);
+
+        return result;
     }
 
-    static String[] cleanArr2(String[] arr){
+    static String[] cleanArr2(String[] arr) {
 
         String line = "";
         //int stringCount = 0;
         for (int i = 0; i < arr.length; i++) {
             String text = arr[i].replaceAll(" ", "");
             // if(text.length() > 0){
-            if(StringUtils.isEmpty(text)){
+            if (StringUtils.isEmpty(text)) {
                 line += "-;";
             }
             line += text + ";";
