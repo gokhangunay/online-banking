@@ -22,7 +22,7 @@ public class SavingsTransaction { // Birikim İşlemleri
     private BigDecimal availableBalance; // Kalan Bakiye
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "SAVINGS_ACCOUNT_ID")
     private SavingsAccount savingsAccount; // Yatırım Hesabı
 
     public SavingsTransaction(){}

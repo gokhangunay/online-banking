@@ -13,6 +13,7 @@ public class Recipient { // Alıcı
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name;
     private String email;
     private String phone;
@@ -20,7 +21,7 @@ public class Recipient { // Alıcı
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "USER_ID")
     @JsonIgnore
     private User user;
 

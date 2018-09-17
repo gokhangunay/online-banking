@@ -13,13 +13,14 @@ public class Appointment { // Randevu
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private Date date;
     private String location;
     private String description;
     private Boolean confirmed; // Onay
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     public Long getId() {

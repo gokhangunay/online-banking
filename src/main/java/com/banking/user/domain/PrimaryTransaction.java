@@ -21,7 +21,7 @@ public class PrimaryTransaction { // Birincil İşlem
     private BigDecimal availableBalance; // Kalan Bakiye
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "PRIMARY_ACCOUNT_ID")
     private PrimaryAccount primaryAccount; // Ana Hesap
 
     public PrimaryTransaction(){}
