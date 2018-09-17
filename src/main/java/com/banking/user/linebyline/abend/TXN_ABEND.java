@@ -147,6 +147,8 @@ public class TXN_ABEND {
         String[] result = line.split(";");
         ArrayUtils.reverse(result);
 
+        System.out.println(result.length);
+
         return result;
     }
 
