@@ -24,7 +24,7 @@ public class User {
     private String email;
 
     private String phoneNumber;
-    private Boolean enabled = true;
+    private Boolean enabled = Boolean.TRUE;
 
     @OneToOne
     private PrimaryAccount primaryAccount; // Ana Hesap
