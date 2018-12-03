@@ -6,15 +6,15 @@ import com.banking.user.domain.security.UserRole;
 import java.util.List;
 import java.util.Set;
 
-public interface IUserService {
+public interface UserService {
 
-    User findByUserName(String userName);
+    User findByUsername(String username);
 
     User findByEmail(String email);
 
-    boolean checkUserExists(String userName, String email);
+    boolean checkUserExists(String username, String email);
 
-    boolean checkUserNameExists(String userName);
+    boolean checkUsernameExists(String username);
 
     boolean checkUserEmailExists(String email);
 
@@ -28,8 +28,8 @@ public interface IUserService {
 
     List<User> findUserList();
 
-    void enableUser(String userName);
+    void enableUser(String username);
 
-    void disableUser(String userName);
+    void disableUser(String username);
 
 }

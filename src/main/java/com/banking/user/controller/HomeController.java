@@ -1,7 +1,7 @@
 package com.banking.user.controller;
 
 import com.banking.user.domain.User;
-import com.banking.user.services.IUserService;
+import com.banking.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 
-    @Autowired
-    private IUserService userService;
+    @Autowired()
+    private UserService userService;
 
     @RequestMapping("/")
     public String home(){
@@ -40,9 +40,9 @@ public class HomeController {
     public String signupPost(@ModelAttribute("user")User user, Model model){
 
 
-        if(userService.checkUserExists(user.getUserName(),user.getEmail())){
-            if(userService.checkUserNameExists(user.getUserName())){
-                model.addAttribute("userNameExist",true);
+        if(userService.checkUserExists(user.getUsername(),user.getEmail())){
+            if(userService.checkUsernameExists(user.getUsername())){
+                model.addAttribute("usernameExist",true);
             }
 
             if(userService.checkUserEmailExists(user.getEmail())){
@@ -55,9 +55,6 @@ public class HomeController {
         }
 
         return "redirect:/";
-
-
-
 
     }
 
