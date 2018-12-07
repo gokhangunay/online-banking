@@ -1,6 +1,9 @@
 package com.banking.user.controller;
 
+import com.banking.user.dao.RoleDao;
 import com.banking.user.domain.User;
+import com.banking.user.domain.security.Role;
+import com.banking.user.domain.security.UserRole;
 import com.banking.user.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,11 +12,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Controller
 public class HomeController {
 
     @Autowired()
     private UserService userService;
+
+    @Autowired
+    private RoleDao roleDao;
 
     @RequestMapping("/")
     public String home(){
@@ -48,14 +57,25 @@ public class HomeController {
             if(userService.checkUserEmailExists(user.getEmail())){
                 model.addAttribute("userEmailExist",true);
             }
+
+            return "signup";
+
         }else{
-            // userService.createUser(user);
-            userService.save(user);
 
+            Set<UserRole> userRoles = new HashSet<>();
+            Role role = roleDao.findByName("USER");
+            userRoles.add(new UserRole(user, role));
+
+            userService.createUser(user, userRoles);
+            // userService.save(user); artık role ve password eklendiği için burası commente alındı!
+
+            return "redirect:/";
         }
+    }
 
-        return "redirect:/";
-
+    @RequestMapping("/user")
+    public String user(Model model){
+        return "user";
     }
 
 }

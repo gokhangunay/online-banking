@@ -1,6 +1,9 @@
 package com.banking.user.dao;
 
 
-public interface UserRoleDao{
+import com.banking.user.domain.security.UserRole;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRoleDao extends JpaRepository<UserRole, Long> {
 
 }

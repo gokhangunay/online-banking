@@ -1,14 +1,18 @@
 package com.banking.user.services.impl;
 
+import com.banking.user.dao.RoleDao;
 import com.banking.user.dao.UserDao;
+import com.banking.user.dao.UserRoleDao;
 import com.banking.user.domain.User;
 import com.banking.user.domain.security.UserRole;
+import com.banking.user.services.AccountService;
 import com.banking.user.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,16 +24,22 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
-/*
-    @Autowired
-    private EntityManager entityManager;
-*/
+
     @Autowired
     private UserDao userDao;
-/*
+
+    @Autowired
+    private RoleDao roleDao;
+
+    @Autowired
+    private UserRoleDao userRoleDao;
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-*/
+
+    @Autowired
+    private AccountService accountService;
+
     @Override
     public User findByUsername(String username) {
         return userDao.findByUsername(username);
@@ -69,22 +79,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        userDao.save(user);
+        // userDao.save(user); passwordu encoding edip kaydetmek için artık bu yapıyı farklı bir methoda yönlendirdim.
+
     }
 
     @Override
     public User createUser(User user, Set<UserRole> userRoles) {
-        User userInfo = findByUsername(user.getUsername());
-        if(userInfo!=null){
+
+        User createUserInfo = findByUsername(user.getUsername());
+
+        if(createUserInfo!=null){
             LOG.info("Kullanıcı adı " + user.getUsername() + " olan kullanıcı zaten var!");
         }else{
-            //String encryptedPassword = passwordEncoder.encode(user.getPassword());
-            //user.setPassword(encryptedPassword);
-            for(UserRole userRole : userRoles){
 
+            String encryptedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encryptedPassword);
+
+            for(UserRole userRole : userRoles){
+                roleDao.save(userRole.getRole());
             }
+
+            user.getUserRoles().addAll(userRoles);
+            user.setPrimaryAccount(accountService.createPrimaryAccount());
+            user.setSavingsAccount(accountService.createSavingsAccount());
+
+            createUserInfo = userDao.save(user);
         }
-        return null;
+
+        return createUserInfo;
     }
 
     @Override

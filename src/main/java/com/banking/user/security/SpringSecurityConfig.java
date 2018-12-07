@@ -54,7 +54,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf().disable().cors().disable()
-                .formLogin().failureUrl("/index?error").defaultSuccessUrl("/userFront").loginPage("/index").permitAll() // form login sayesinde auth olmayan kullanicilara neler yapilabilir karar veriyoruz
+                .formLogin().failureUrl("/index?error").defaultSuccessUrl("/user").loginPage("/index").permitAll() // form login sayesinde auth olmayan kullanicilara neler yapilabilir karar veriyoruz
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/index?logout").deleteCookies("remember-me").permitAll()
                 .and()
