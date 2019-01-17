@@ -3,6 +3,7 @@ package com.banking.user.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 
 @Entity
-public class PrimaryAccount { // Ana Hesap
+public class PrimaryAccount implements Serializable { // Ana Hesap
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

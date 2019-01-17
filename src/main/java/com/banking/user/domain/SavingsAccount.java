@@ -3,6 +3,7 @@ package com.banking.user.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Created by gokhan.gunay on 2/5/2018.
  */
 @Entity
-public class SavingsAccount { // Birikim Hesabı
+public class SavingsAccount implements Serializable { // Birikim Hesabı
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

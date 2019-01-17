@@ -2,39 +2,40 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head th:fragment="common-header">
 
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <title>User Front</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content=""/>
+        <title>User Front</title>
+        <!-- Bootstrap Core CSS -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Website Font style -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+        <!-- Website Font style -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
 
-    <!-- Google Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css' />
-    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css' />
+        <!-- Google Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css' />
+        <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css' />
 
-    <!--bootstrap date-time picker-->
-    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+        <!--bootstrap date-time picker-->
+        <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
-    <!--data table-->
-    <link href="/css/jquery.dataTable.min.css" rel="stylesheet" />
-    <link href="/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+        <!--data table-->
+        <link href="/css/jquery.dataTable.min.css" rel="stylesheet" />
+        <link href="/css/dataTables.bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Custom CSS -->
-    <!--<link href="css/scrolling-nav.css" rel="stylesheet" />-->
-    <link href="/css/main.css" rel="stylesheet" />
-</head>
+        <!-- Custom CSS -->
+        <!--<link href="css/scrolling-nav.css" rel="stylesheet" />-->
+        <link href="/css/main.css" rel="stylesheet" />
+
+    </head>
     <body>
         <!-- Navigation -->
         <div th:fragment="navbar">
-            <img class="img-responsive" src="../../static/images/myBanner.png" alt="banner"/>
+            <img class="img-responsive" src="/images/myBanner.png" alt="banner"/>
 
-            <nav class="navbar navbar-default " role="navigation">
+            <nav class="navbar navbar-default" role="navigation">
                 <div class="container">
                     <div class="navbar-header page-scroll">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -43,7 +44,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand page-scroll" th:href="">Ana Sayfa</a>   <!--@{/front}-->
+                        <a class="navbar-brand page-scroll" th:href="@{/user}">Ana Sayfa</a>   <!--@{/front}-->
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,34 +57,34 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hesaplar <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a th:href="">Vadesiz</a></li>  <!--@{/account/primaryAccount}-->
+                                    <li><a th:href="@{/account/primaryAccount}">Vadesiz</a></li>  <!--@{/account/primaryAccount}-->
                                     <li role="separator" class="divider"></li>
-                                    <li><a th:href="">Vadeli</a></li>  <!--@{/account/savingsAccount}-->
+                                    <li><a th:href="@{/account/savingsAccount}">Vadeli</a></li>  <!--@{/account/savingsAccount}-->
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transfer <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a th:href="">Hesaplar Arası</a></li> <!--@{/transfer/betweenAccounts}-->
-                                    <li><a th:href="">Başka Bir Hesaba</a></li>    <!--@{/transfer/toSomeoneElse}-->
+                                    <li><a th:href="@{/transfer/betweenAccounts}">Hesaplar Arası</a></li> <!--@{/transfer/betweenAccounts}-->
+                                    <li><a th:href="@{/transfer/toSomeoneElse}">Başka Bir Hesaba</a></li>    <!--@{/transfer/toSomeoneElse}-->
                                     <li role="separator" class="divider"></li>
-                                    <li><a th:href="">Alıcı Ekle/Düzenle</a></li> <!--@{/transfer/recipient}-->
+                                    <li><a th:href="@{/transfer/recipient}">Alıcı Ekle/Düzenle</a></li> <!--@{/transfer/recipient}-->
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Appointment <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Randevu <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a th:href="">Bir Randevu Ayarla</a></li>  <!--@{/appointment/create}-->
+                                    <li><a th:href="@{/appointment/create}">Randevu Ayarla</a></li>  <!--@{/appointment/create}-->
                                 </ul>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Me <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ben <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a th:href="@{/user/profile}">Profile</a></li>
+                                    <li><a th:href="@{/user/profile}">Profil</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a th:href="@{/logout}">Logout</a></li>
+                                    <li><a th:href="@{/logout}">Çıkış</a></li>
                                 </ul>
                             </li>
                         </ul>
